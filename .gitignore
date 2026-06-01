@@ -25,3 +25,4 @@ venv/
 *.out
 *.synctex.gz
 *.toc
+.cargo/config.toml
