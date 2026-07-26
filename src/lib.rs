@@ -1,7 +1,7 @@
 //! Mdport v1: compact context transfer records for documents and corpus slices.
 //!
 //! Mdports are optimized for agents and corpus tooling, not human presentation.
-//! MDLOOM can emit Mdports from compiled source documents; CROP can emit the same
+//! MDLOOM can emit Mdports from compiled source documents; MDCROP can emit the same
 //! schema for views and corpus slices.
 
 use serde::{Deserialize, Serialize};

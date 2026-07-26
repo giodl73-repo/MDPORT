@@ -2,8 +2,8 @@
 
 ## Research question
 
-How should `mdport.v1` improve transfer size, CROP runtime, and context quality
-before broader adoption by repos beyond MDLOOM and CROP?
+How should `mdport.v1` improve transfer size, MDCROP runtime, and context quality
+before broader adoption by repos beyond MDLOOM and MDCROP?
 
 Decision supported: keep `mdport.v1` stable as compact JSON for first adoption,
 then prototype bundle and section-link improvements behind explicit compatibility
@@ -29,13 +29,13 @@ boundaries.
   and keep `document` unchanged.
 - Confidence: high.
 
-**MDPORT-03 — CROP runs faster over Mdport because the graph is smaller.**
+**MDPORT-03 — MDCROP runs faster over Mdport because the graph is smaller.**
 
 - Source command:
   `.\examples\bench-fixtures\generate.ps1 -Size all -Force; .\examples\bench-fixtures\run.ps1 -Size all -Runs 3`
-  in `C:\src\crop`.
+  in `C:\src\mdcrop`.
 - Result snapshot after applying AI-oriented context/provenance sections in the
-  CROP benchmark fixtures:
+  MDCROP benchmark fixtures:
 
 | Size | Mode | Bytes | Units | Edges | Selected tokens | Quality | Avg total |
 |---|---:|---:|---:|---:|---:|---:|---:|
@@ -46,15 +46,15 @@ boundaries.
 | large | md | 179,552 | 2,304 | 8,528 | 1,679 | 0.526125 | 146.000ms |
 | large | mdport | 249,952 | 512 | 1,472 | 1,339 | 0.913321 | 61.667ms |
 
-- Implication: Mdport improves runtime and benchmark quality by giving CROP fewer,
+- Implication: Mdport improves runtime and benchmark quality by giving MDCROP fewer,
   cleaner section units, even while current JSON bytes are larger than Markdown.
 - Confidence: medium. The generated fixture is useful for regression, but real
   MAXIM-scale corpora should be measured before broad claims.
 
 **MDPORT-04 — Quality gains come from section boundaries, not compression.**
 
-- Source: `src/lib.rs`, `markdown_sections()` and CROP benchmark fixture output.
-- Behavior: Mdport sections preserve heading paths and stable IDs; CROP does not
+- Source: `src/lib.rs`, `markdown_sections()` and MDCROP benchmark fixture output.
+- Behavior: Mdport sections preserve heading paths and stable IDs; MDCROP does not
   need to rediscover paragraphs/frontmatter from raw Markdown.
 - Implication: quality improvements should focus on section granularity, per
   section provenance, and graph edges before changing serialization format.
@@ -110,30 +110,30 @@ cost.**
 
 1. Add a bundle experiment, likely `mdport.bundle.v1`, that hoists `schema`,
    `kind`, `format`, and repeated key names across many documents.
-2. Add section-level refs or links so CROP can connect the exact section that
+2. Add section-level refs or links so MDCROP can connect the exact section that
    references another source instead of treating all document refs as equally
    attached to every section.
 3. Add a fixture profile that varies chunk granularity: heading-level, paragraph
    level, and hybrid. This should optimize quality without changing the wire
    format first.
 4. Compare compact JSON, JSONL bundle, CBOR, MessagePack, gzip, and zstd on
-   generated and real corpora, reporting bytes, parse time, CROP ingest time, and
+   generated and real corpora, reporting bytes, parse time, MDCROP ingest time, and
    selected-context quality.
 
 ### Defer or reject for now
 
-1. Do not replace `mdport.v1` with binary-only encoding before MDLOOM/CROP/MAXIM
+1. Do not replace `mdport.v1` with binary-only encoding before MDLOOM/MDCROP/MAXIM
    adoption. It would make debugging and third-party adoption harder.
 2. Do not alias field names in `mdport.v1`; short keys reduce bytes but weaken
    the public contract. Test bundle/key-table approaches first.
-3. Do not bake CROP relevance scores into Mdport. Scores are task-specific and
-   belong in CROP outputs, not the portable source/context schema.
+3. Do not bake MDCROP relevance scores into Mdport. Scores are task-specific and
+   belong in MDCROP outputs, not the portable source/context schema.
 
 ## Next validation
 
-1. Generate compact fixtures in CROP and record output:
+1. Generate compact fixtures in MDCROP and record output:
    `.\examples\bench-fixtures\run.ps1 -Size all -Runs 10`.
-2. Maintain the synthetic CROP fixture quality target: Mdport should beat
+2. Maintain the synthetic MDCROP fixture quality target: Mdport should beat
    Markdown by at least `+0.10` quality at medium and large sizes and run in no
    more than 70% of the Markdown total time.
 3. Add a real MAXIM slice fixture once the MAXIM backfill path emits Mdports.

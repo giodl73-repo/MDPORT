@@ -2,7 +2,7 @@
 
 Mdport defines the `mdport.v1` compact context-transfer schema and Rust crate.
 Use these roles when changing schema fields, sectioning behavior, serialization,
-or MDLOOM/CROP integration examples.
+or MDLOOM/MDCROP integration examples.
 
 ## Parliament
 
@@ -10,7 +10,7 @@ or MDLOOM/CROP integration examples.
 |---|---|---|
 | `parliament/schema-steward.md` | Schema Steward | Stable interchange contract vs. useful evolution |
 | `parliament/compactness-reviewer.md` | Compactness Reviewer | Transfer size vs. sufficient provenance |
-| `parliament/integration-reviewer.md` | Integration Reviewer | Standalone standard vs. MDLOOM/CROP assumptions |
+| `parliament/integration-reviewer.md` | Integration Reviewer | Standalone standard vs. MDLOOM/MDCROP assumptions |
 
 ## Review order
 

@@ -13,7 +13,7 @@ MDPORT records are not a human publishing target. They are small, provenance-bea
 records that preserve source identity, section boundaries, stable IDs, line
 numbers, resolved text, and dependency references.
 
-MDLOOM emits Mdports from compiled `.source.md` files. CROP can emit the same
+MDLOOM emits Mdports from compiled `.source.md` files. MDCROP can emit the same
 schema for corpus views and slices, so both tools can exchange context without
 inventing separate pack formats.
 
