@@ -1,20 +1,18 @@
-//! Pebble v1: compact context transfer records for documents and corpus slices.
+//! Mdport v1: compact context transfer records for documents and corpus slices.
 //!
-//! Pebbles are optimized for agents and corpus tooling, not human presentation.
-//! PROOF can emit Pebbles from compiled source documents; CROP can emit the same
+//! Mdports are optimized for agents and corpus tooling, not human presentation.
+//! MDLOOM can emit Mdports from compiled source documents; CROP can emit the same
 //! schema for views and corpus slices.
 
 use serde::{Deserialize, Serialize};
-#[cfg(feature = "slice")]
-use serde_json::{json, Value};
 use std::collections::BTreeMap;
 
-pub const SCHEMA: &str = "pebble.v1";
+pub const SCHEMA: &str = "mdport.v1";
 pub const DOCUMENT_KIND: &str = "document";
 pub const MARKDOWN_FORMAT: &str = "markdown";
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub struct PebbleDocument {
+pub struct MdportDocument {
     pub schema: String,
     pub kind: String,
     pub title: String,
@@ -22,13 +20,13 @@ pub struct PebbleDocument {
     pub format: String,
     #[serde(default)]
     pub metadata: BTreeMap<String, String>,
-    pub sections: Vec<PebbleSection>,
+    pub sections: Vec<MdportSection>,
     #[serde(default)]
     pub refs: Vec<String>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub struct PebbleSection {
+pub struct MdportSection {
     pub id: String,
     pub path: Vec<String>,
     pub level: usize,
@@ -38,7 +36,7 @@ pub struct PebbleSection {
     pub text: String,
 }
 
-impl PebbleDocument {
+impl MdportDocument {
     pub fn from_markdown(
         markdown: &str,
         fallback_title: &str,
@@ -74,46 +72,6 @@ impl PebbleDocument {
     pub fn from_json(json: &str) -> serde_json::Result<Self> {
         serde_json::from_str(json)
     }
-
-    #[cfg(feature = "slice")]
-    pub fn select_documents<'a>(
-        documents: &'a [PebbleDocument],
-        expr: &str,
-    ) -> Result<Vec<&'a PebbleDocument>, slice_core::SliceError> {
-        let catalog = document_catalog(documents);
-        let selector = slice_core::compile(expr, &catalog)?;
-        Ok(documents
-            .iter()
-            .filter(|document| selector.matches(&document_row(document)))
-            .collect())
-    }
-
-    #[cfg(feature = "slice")]
-    pub fn select_sections<'a>(
-        documents: &'a [PebbleDocument],
-        expr: &str,
-    ) -> Result<Vec<SelectedPebbleSection<'a>>, slice_core::SliceError> {
-        let catalog = section_catalog(documents);
-        let selector = slice_core::compile(expr, &catalog)?;
-        Ok(documents
-            .iter()
-            .flat_map(|document| {
-                document
-                    .sections
-                    .iter()
-                    .filter(|section| selector.matches(&section_row(document, section)))
-                    .map(|section| SelectedPebbleSection { document, section })
-                    .collect::<Vec<_>>()
-            })
-            .collect())
-    }
-}
-
-#[cfg(feature = "slice")]
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct SelectedPebbleSection<'a> {
-    pub document: &'a PebbleDocument,
-    pub section: &'a PebbleSection,
 }
 
 pub fn document_title(markdown: &str, fallback: &str) -> String {
@@ -130,95 +88,15 @@ pub fn document_title(markdown: &str, fallback: &str) -> String {
         .to_string()
 }
 
-pub fn markdown_sections(markdown: &str) -> Vec<PebbleSection> {
+pub fn markdown_sections(markdown: &str) -> Vec<MdportSection> {
     markdown_sections_with_metadata(markdown, &BTreeMap::new(), 1)
-}
-
-#[cfg(feature = "slice")]
-fn document_catalog(documents: &[PebbleDocument]) -> slice_core::FieldCatalog {
-    let mut catalog = slice_core::FieldCatalog::new();
-    catalog
-        .insert("schema", slice_core::ValueType::String)
-        .insert("kind", slice_core::ValueType::String)
-        .insert("title", slice_core::ValueType::String)
-        .insert("source", slice_core::ValueType::String)
-        .insert("format", slice_core::ValueType::String)
-        .insert("refs", slice_core::ValueType::Array);
-    for document in documents {
-        for key in document.metadata.keys() {
-            catalog.insert(format!("metadata.{key}"), slice_core::ValueType::String);
-        }
-    }
-    catalog
-}
-
-#[cfg(feature = "slice")]
-fn section_catalog(documents: &[PebbleDocument]) -> slice_core::FieldCatalog {
-    let mut catalog = slice_core::FieldCatalog::new();
-    catalog
-        .insert("document.schema", slice_core::ValueType::String)
-        .insert("document.kind", slice_core::ValueType::String)
-        .insert("document.title", slice_core::ValueType::String)
-        .insert("document.source", slice_core::ValueType::String)
-        .insert("document.format", slice_core::ValueType::String)
-        .insert("document.refs", slice_core::ValueType::Array)
-        .insert("section.id", slice_core::ValueType::String)
-        .insert("section.path", slice_core::ValueType::Array)
-        .insert("section.level", slice_core::ValueType::Number)
-        .insert("section.line", slice_core::ValueType::Number)
-        .insert("section.text", slice_core::ValueType::String);
-    for document in documents {
-        for key in document.metadata.keys() {
-            catalog.insert(
-                format!("document.metadata.{key}"),
-                slice_core::ValueType::String,
-            );
-        }
-        for section in &document.sections {
-            for key in section.metadata.keys() {
-                catalog.insert(
-                    format!("section.metadata.{key}"),
-                    slice_core::ValueType::String,
-                );
-            }
-        }
-    }
-    catalog
-}
-
-#[cfg(feature = "slice")]
-fn document_row(document: &PebbleDocument) -> Value {
-    json!({
-        "schema": document.schema,
-        "kind": document.kind,
-        "title": document.title,
-        "source": document.source,
-        "format": document.format,
-        "metadata": document.metadata,
-        "refs": document.refs,
-    })
-}
-
-#[cfg(feature = "slice")]
-fn section_row(document: &PebbleDocument, section: &PebbleSection) -> Value {
-    json!({
-        "document": document_row(document),
-        "section": {
-            "id": section.id,
-            "path": section.path,
-            "level": section.level,
-            "line": section.line,
-            "metadata": section.metadata,
-            "text": section.text,
-        },
-    })
 }
 
 fn markdown_sections_with_metadata(
     markdown: &str,
     metadata: &BTreeMap<String, String>,
     start_line: usize,
-) -> Vec<PebbleSection> {
+) -> Vec<MdportSection> {
     let mut sections = Vec::new();
     let mut current_start = start_line;
     let mut current_level = 0usize;
@@ -266,7 +144,7 @@ fn markdown_sections_with_metadata(
     );
 
     if sections.is_empty() {
-        sections.push(PebbleSection {
+        sections.push(MdportSection {
             id: "document".to_string(),
             path: Vec::new(),
             level: 0,
@@ -280,7 +158,7 @@ fn markdown_sections_with_metadata(
 }
 
 fn push_section(
-    sections: &mut Vec<PebbleSection>,
+    sections: &mut Vec<MdportSection>,
     line: usize,
     level: usize,
     path: &[String],
@@ -293,7 +171,7 @@ fn push_section(
     }
     let base = path.last().map_or("preamble", String::as_str);
     let id = unique_section_id(sections, base);
-    sections.push(PebbleSection {
+    sections.push(MdportSection {
         id,
         path: path.to_vec(),
         level,
@@ -372,7 +250,7 @@ fn clean_frontmatter_value(value: &str) -> String {
         .to_string()
 }
 
-fn unique_section_id(sections: &[PebbleSection], heading: &str) -> String {
+fn unique_section_id(sections: &[MdportSection], heading: &str) -> String {
     let base = slugify(heading);
     let base = if base.is_empty() {
         "section".to_string()
@@ -424,37 +302,37 @@ mod tests {
 
     #[test]
     fn chunks_markdown_by_heading_path() {
-        let pebble = PebbleDocument::from_markdown(
+        let mdport = MdportDocument::from_markdown(
             "# Guide\n\nIntro.\n\n## Steps\n\n- one\n- two\n",
             "fallback",
             "guide.source.md",
-            [".proof/side-info/links.json"],
+            [".mdloom/side-info/links.json"],
         );
 
-        assert_eq!(pebble.schema, SCHEMA);
-        assert_eq!(pebble.title, "Guide");
-        assert_eq!(pebble.refs, vec![".proof/side-info/links.json"]);
-        assert!(pebble.metadata.is_empty());
-        assert_eq!(pebble.sections[0].id, "guide");
-        assert!(pebble.sections[0].metadata.is_empty());
-        assert_eq!(pebble.sections[0].path, vec!["Guide"]);
-        assert_eq!(pebble.sections[1].id, "steps");
-        assert_eq!(pebble.sections[1].path, vec!["Guide", "Steps"]);
-        assert!(pebble.sections[1].text.contains("- one"));
+        assert_eq!(mdport.schema, SCHEMA);
+        assert_eq!(mdport.title, "Guide");
+        assert_eq!(mdport.refs, vec![".mdloom/side-info/links.json"]);
+        assert!(mdport.metadata.is_empty());
+        assert_eq!(mdport.sections[0].id, "guide");
+        assert!(mdport.sections[0].metadata.is_empty());
+        assert_eq!(mdport.sections[0].path, vec!["Guide"]);
+        assert_eq!(mdport.sections[1].id, "steps");
+        assert_eq!(mdport.sections[1].path, vec!["Guide", "Steps"]);
+        assert!(mdport.sections[1].text.contains("- one"));
     }
 
     #[test]
     fn round_trips_json() {
-        let pebble = PebbleDocument::from_markdown(
+        let mdport = MdportDocument::from_markdown(
             "Body only\n",
             "Fallback",
             "body.md",
             Vec::<String>::new(),
         );
-        let json = pebble.to_json().unwrap();
-        let loaded = PebbleDocument::from_json(&json).unwrap();
+        let json = mdport.to_json().unwrap();
+        let loaded = MdportDocument::from_json(&json).unwrap();
 
-        assert_eq!(loaded, pebble);
+        assert_eq!(loaded, mdport);
         assert_eq!(loaded.sections[0].id, "preamble");
     }
 
@@ -468,33 +346,33 @@ mod tests {
 
     #[test]
     fn frontmatter_becomes_document_and_section_metadata() {
-        let pebble = PebbleDocument::from_markdown(
-            "---\ntitle: Frontmatter Guide\ntags: [proof, guide]\nstatus: ready\n---\n\n# Body Title\n\nContent.",
+        let mdport = MdportDocument::from_markdown(
+            "---\ntitle: Frontmatter Guide\ntags: [mdloom, guide]\nstatus: ready\n---\n\n# Body Title\n\nContent.",
             "Fallback",
             "guide.source.md",
             Vec::<String>::new(),
         );
 
-        assert_eq!(pebble.title, "Frontmatter Guide");
+        assert_eq!(mdport.title, "Frontmatter Guide");
         assert_eq!(
-            pebble.metadata.get("tags").map(String::as_str),
-            Some("[proof, guide]")
+            mdport.metadata.get("tags").map(String::as_str),
+            Some("[mdloom, guide]")
         );
         assert_eq!(
-            pebble.sections[0]
+            mdport.sections[0]
                 .metadata
                 .get("status")
                 .map(String::as_str),
             Some("ready")
         );
-        assert_eq!(pebble.sections[0].line, 7);
-        assert!(!pebble.sections[0].text.contains("status: ready"));
+        assert_eq!(mdport.sections[0].line, 7);
+        assert!(!mdport.sections[0].text.contains("status: ready"));
     }
 
     #[test]
     fn deserializes_legacy_json_without_metadata() {
         let json = r##"{
-          "schema": "pebble.v1",
+          "schema": "mdport.v1",
           "kind": "document",
           "title": "Legacy",
           "source": "legacy.md",
@@ -511,7 +389,7 @@ mod tests {
           "refs": []
         }"##;
 
-        let loaded = PebbleDocument::from_json(json).unwrap();
+        let loaded = MdportDocument::from_json(json).unwrap();
 
         assert!(loaded.metadata.is_empty());
         assert!(loaded.sections[0].metadata.is_empty());

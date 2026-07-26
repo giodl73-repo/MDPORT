@@ -2,8 +2,8 @@
 
 ## Goal
 
-Show how consumers can apply SLICE selectors to Pebble-shaped document and
-section rows without changing `pebble.v1`.
+Show how consumers can apply SLICE selectors to Mdport-shaped document and
+section rows without changing `mdport.v1`.
 
 ## Pulse table
 
@@ -13,7 +13,7 @@ section rows without changing `pebble.v1`.
 
 ## Success criteria
 
-- Pebble remains the schema owner.
+- Mdport remains the schema owner.
 - SLICE is only a dev/example dependency.
 - Examples cover document metadata and section metadata.
 - `cargo test` passes.

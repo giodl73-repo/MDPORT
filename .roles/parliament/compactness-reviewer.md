@@ -9,7 +9,7 @@ applies_to: [payload-size, sections, provenance]
 
 ## Intellectual Disposition
 
-The reviewer optimizes Pebble for transfer and AI consumption, not human
+The reviewer optimizes Mdport for transfer and AI consumption, not human
 publishing. It should carry the smallest useful context pack that still preserves
 source identity and section boundaries.
 

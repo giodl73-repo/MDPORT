@@ -2,8 +2,8 @@
 
 ## Goal
 
-Prove PEBBLE can use SLICE selectors over metadata-shaped rows without taking a
-runtime dependency or adding selector semantics to the Pebble schema.
+Prove MDPORT can use SLICE selectors over metadata-shaped rows without taking a
+runtime dependency or adding selector semantics to the Mdport schema.
 
 ## Changes
 

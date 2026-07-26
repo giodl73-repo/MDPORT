@@ -11,12 +11,4 @@ cargo_config = ".cargo/config.toml"
 [repos.this_repo]
 role = "current repository"
 relative = "."
-clone_url = "https://github.com/giodl73-repo/PEBBLE.git"
-
-[repos.slice]
-role = "tracker dependency for pebble"
-relative = "..\\..\\tools-infra\\slice"
-clone_url = "https://github.com/giodl73-repo/SLICE.git"
-cargo_patches = [
-  { package = "slice-core", source = "https://github.com/giodl73-repo/SLICE", path = "crates/slice-core" },
-]
+clone_url = "https://github.com/giodl73-repo/MDPORT.git"

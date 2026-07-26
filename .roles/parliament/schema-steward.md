@@ -9,13 +9,13 @@ applies_to: [schema, versioning, serialization]
 
 ## Intellectual Disposition
 
-The steward treats every `pebble.v1` field as a public interchange contract.
+The steward treats every `mdport.v1` field as a public interchange contract.
 Schema changes should be explicit, versioned, and easy for independent tools to
 validate.
 
 ## Key Question
 
-*"Can PROOF, CROP, and a third-party reader exchange this without hidden
+*"Can MDLOOM, CROP, and a third-party reader exchange this without hidden
 assumptions?"*
 
 ## Lens - What to Verify

@@ -1,16 +1,17 @@
 [package]
-name = "pebble"
-version = "0.1.0"
+name = "mdport"
+version = "0.2.0"
 edition = "2021"
-description = "Pebble v1 compact context transfer format for PROOF, CROP, and AI agents."
+rust-version = "1.82"
+description = "Compact mdport.v1 transfer records for Markdown documents and corpus slices."
 license = "MIT"
-repository = "https://github.com/giodl73-repo/PEBBLE"
+repository = "https://github.com/giodl73-repo/MDPORT"
+homepage = "https://github.com/giodl73-repo/MDPORT"
+documentation = "https://docs.rs/mdport"
+readme = "README.md"
+keywords = ["markdown", "context", "provenance", "serialization", "documents"]
+categories = ["data-structures", "encoding", "text-processing"]
 
 [dependencies]
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-slice-core = { git = "https://github.com/giodl73-repo/SLICE", package = "slice-core", rev = "9e4e52eb42c0415c5a2eacb83e909c313986e868", optional = true }
-
-[features]
-default = []
-slice = ["dep:slice-core"]
