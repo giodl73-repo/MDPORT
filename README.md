@@ -9,6 +9,22 @@ agents. The current schema is `mdport.v1`.
 [ROLES](https://github.com/giodl73-repo/ROLES), the `.roles` convention for
 repository-local review panels.
 
+## MD family
+
+MDPORT is the transfer layer in the MD family:
+
+```text
+Markdown → MDPATH → MDCROP → MDLOOM → MDPORT
+             address    select     build      transfer
+```
+
+| Repo | Responsibility |
+|------|----------------|
+| [MDPATH](https://github.com/giodl73-repo/MDPATH) | Stable `md://` addresses for Markdown elements. |
+| [MDCROP](https://github.com/giodl73-repo/MDCROP) | Corpus indexing, graph selection, and bounded context. |
+| [MDLOOM](https://github.com/giodl73-repo/MDLOOM) | Validation, compilation, rendering, and publication. |
+| **MDPORT** | Compact portable `mdport.v1` records. |
+
 MDPORT records are not a human publishing target. They are small, provenance-bearing
 records that preserve source identity, section boundaries, stable IDs, line
 numbers, resolved text, and dependency references.
