@@ -4,7 +4,7 @@
 //! MDLOOM can emit Mdports from compiled source documents; MDCROP can emit the same
 //! schema for views and corpus slices.
 
-use serde::{Deserialize, Serialize};
+use serde::{de::Error as _, Deserialize, Serialize};
 use std::collections::BTreeMap;
 
 pub const SCHEMA: &str = "mdport.v1";
@@ -70,7 +70,14 @@ impl MdportDocument {
     }
 
     pub fn from_json(json: &str) -> serde_json::Result<Self> {
-        serde_json::from_str(json)
+        let doc: Self = serde_json::from_str(json)?;
+        if doc.schema != SCHEMA {
+            return Err(serde_json::Error::custom(format!(
+                "unsupported schema: {}",
+                doc.schema
+            )));
+        }
+        Ok(doc)
     }
 }
 
@@ -369,6 +376,20 @@ mod tests {
         assert!(!mdport.sections[0].text.contains("status: ready"));
     }
 
+    #[test]
+    fn rejects_non_mdport_schema() {
+        let json = r##"{
+          "schema": "mdport.v2",
+          "kind": "document",
+          "title": "Legacy",
+          "source": "legacy.md",
+          "format": "markdown",
+          "sections": []
+        }"##;
+
+        let err = MdportDocument::from_json(json).unwrap_err();
+        assert!(err.to_string().contains("unsupported schema: mdport.v2"));
+    }
     #[test]
     fn deserializes_legacy_json_without_metadata() {
         let json = r##"{

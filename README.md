@@ -86,6 +86,20 @@ let mdport = mdport::MdportDocument::from_markdown(
 let json = mdport.to_json()?;
 ```
 
+## Schema validation proof
+
+`MdportDocument::from_json` accepts `mdport.v1` records and rejects other schema
+versions before they enter downstream tools.
+
+```powershell
+cargo test round_trips_json
+cargo test rejects_non_mdport_schema
+```
+
+The accepted test round-trips an emitted `mdport.v1` document. The rejection
+test supplies `mdport.v2` and records the structured
+`unsupported schema: mdport.v2` error.
+
 ## Research
 
 - [Performance research](docs/research/performance.md) tracks size, speed, and
