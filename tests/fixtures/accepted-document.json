@@ -1,0 +1,29 @@
+{
+  "schema": "mdport.v1",
+  "kind": "document",
+  "title": "Conformance Guide",
+  "source": "guide.source.md",
+  "format": "markdown",
+  "metadata": {
+    "source_custody": "reviewed",
+    "status": "ready"
+  },
+  "sections": [
+    {
+      "id": "conformance-guide",
+      "path": [
+        "Conformance Guide"
+      ],
+      "level": 1,
+      "line": 1,
+      "metadata": {
+        "source_custody": "reviewed",
+        "status": "ready"
+      },
+      "text": "# Conformance Guide\n\nRetained accepted content."
+    }
+  ],
+  "refs": [
+    "md://guide.source.md#conformance-guide"
+  ]
+}

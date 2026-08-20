@@ -89,16 +89,19 @@ let json = mdport.to_json()?;
 ## Schema validation proof
 
 `MdportDocument::from_json` accepts `mdport.v1` records and rejects other schema
-versions before they enter downstream tools.
+versions before they enter downstream tools. New consumers should use
+`MdportDocument::from_json_checked` when they need typed unsupported-schema and
+invalid-record failures without changing the legacy parser contract.
 
 ```powershell
-cargo test round_trips_json
-cargo test rejects_non_mdport_schema
+cargo test --test conformance
 ```
 
-The accepted test round-trips an emitted `mdport.v1` document. The rejection
-test supplies `mdport.v2` and records the structured
-`unsupported schema: mdport.v2` error.
+The retained proof round-trips an accepted `mdport.v1` document through compact
+JSON, rejects `mdport.v2` with expected and observed schema identifiers, and
+rejects a record missing `source` with a location-bearing typed failure. See
+[conformance and lifecycle](docs/conformance.md) for fixtures, compatibility,
+migration, deprecation, and rollback rules.
 
 ## Research
 

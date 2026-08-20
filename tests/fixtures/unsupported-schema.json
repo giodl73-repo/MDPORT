@@ -1,0 +1,10 @@
+{
+  "schema": "mdport.v2",
+  "kind": "document",
+  "title": "Future Guide",
+  "source": "future.source.md",
+  "format": "markdown",
+  "metadata": {},
+  "sections": [],
+  "refs": []
+}

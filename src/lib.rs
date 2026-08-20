@@ -6,6 +6,7 @@
 
 use serde::{de::Error as _, Deserialize, Serialize};
 use std::collections::BTreeMap;
+use std::fmt;
 
 pub const SCHEMA: &str = "mdport.v1";
 pub const DOCUMENT_KIND: &str = "document";
@@ -35,6 +36,43 @@ pub struct MdportSection {
     pub metadata: BTreeMap<String, String>,
     pub text: String,
 }
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[non_exhaustive]
+pub enum MdportReadError {
+    InvalidRecord {
+        message: String,
+        line: usize,
+        column: usize,
+    },
+    UnsupportedSchema {
+        expected: &'static str,
+        found: String,
+    },
+}
+
+impl fmt::Display for MdportReadError {
+    fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::InvalidRecord {
+                message,
+                line,
+                column,
+            } => write!(
+                formatter,
+                "invalid mdport record at line {line}, column {column}: {message}"
+            ),
+            Self::UnsupportedSchema { expected, found } => {
+                write!(
+                    formatter,
+                    "unsupported schema: {found}; expected {expected}"
+                )
+            }
+        }
+    }
+}
+
+impl std::error::Error for MdportReadError {}
 
 impl MdportDocument {
     pub fn from_markdown(
@@ -76,6 +114,22 @@ impl MdportDocument {
                 "unsupported schema: {}",
                 doc.schema
             )));
+        }
+        Ok(doc)
+    }
+
+    pub fn from_json_checked(json: &str) -> Result<Self, MdportReadError> {
+        let doc: Self =
+            serde_json::from_str(json).map_err(|error| MdportReadError::InvalidRecord {
+                message: error.to_string(),
+                line: error.line(),
+                column: error.column(),
+            })?;
+        if doc.schema != SCHEMA {
+            return Err(MdportReadError::UnsupportedSchema {
+                expected: SCHEMA,
+                found: doc.schema,
+            });
         }
         Ok(doc)
     }
