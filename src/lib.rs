@@ -1,7 +1,7 @@
 //! Mdport v1: compact context transfer records for documents and corpus slices.
 //!
 //! Mdports are optimized for agents and corpus tooling, not human presentation.
-//! MDLOOM can emit Mdports from compiled source documents; MDCROP can emit the same
+//! PROOF can emit Mdports from compiled source documents; MDCROP can emit the same
 //! schema for views and corpus slices.
 
 use serde::{de::Error as _, Deserialize, Serialize};
@@ -367,12 +367,12 @@ mod tests {
             "# Guide\n\nIntro.\n\n## Steps\n\n- one\n- two\n",
             "fallback",
             "guide.source.md",
-            [".mdloom/side-info/links.json"],
+            [".proof/side-info/links.json"],
         );
 
         assert_eq!(mdport.schema, SCHEMA);
         assert_eq!(mdport.title, "Guide");
-        assert_eq!(mdport.refs, vec![".mdloom/side-info/links.json"]);
+        assert_eq!(mdport.refs, vec![".proof/side-info/links.json"]);
         assert!(mdport.metadata.is_empty());
         assert_eq!(mdport.sections[0].id, "guide");
         assert!(mdport.sections[0].metadata.is_empty());
@@ -408,7 +408,7 @@ mod tests {
     #[test]
     fn frontmatter_becomes_document_and_section_metadata() {
         let mdport = MdportDocument::from_markdown(
-            "---\ntitle: Frontmatter Guide\ntags: [mdloom, guide]\nstatus: ready\n---\n\n# Body Title\n\nContent.",
+            "---\ntitle: Frontmatter Guide\ntags: [proof, guide]\nstatus: ready\n---\n\n# Body Title\n\nContent.",
             "Fallback",
             "guide.source.md",
             Vec::<String>::new(),
@@ -417,7 +417,7 @@ mod tests {
         assert_eq!(mdport.title, "Frontmatter Guide");
         assert_eq!(
             mdport.metadata.get("tags").map(String::as_str),
-            Some("[mdloom, guide]")
+            Some("[proof, guide]")
         );
         assert_eq!(
             mdport.sections[0]

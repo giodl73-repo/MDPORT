@@ -14,7 +14,7 @@ repository-local review panels.
 MDPORT is the transfer layer in the MD family:
 
 ```text
-Markdown → MDPATH → MDCROP → MDLOOM → MDPORT
+Markdown → MDPATH → MDCROP → PROOF → MDPORT
              address    select     build      transfer
 ```
 
@@ -22,14 +22,14 @@ Markdown → MDPATH → MDCROP → MDLOOM → MDPORT
 |------|----------------|
 | [MDPATH](https://github.com/giodl73-repo/MDPATH) | Stable `md://` addresses for Markdown elements. |
 | [MDCROP](https://github.com/giodl73-repo/MDCROP) | Corpus indexing, graph selection, and bounded context. |
-| [MDLOOM](https://github.com/giodl73-repo/MDLOOM) | Validation, compilation, rendering, and publication. |
+| [PROOF](https://github.com/giodl73-repo/PROOF) | Validation, compilation, rendering, and publication. |
 | **MDPORT** | Compact portable `mdport.v1` records. |
 
 MDPORT records are not a human publishing target. They are small, provenance-bearing
 records that preserve source identity, section boundaries, stable IDs, line
 numbers, resolved text, and dependency references.
 
-MDLOOM emits Mdports from compiled `.source.md` files. MDCROP can emit the same
+PROOF emits Mdports from compiled `.source.md` files. MDCROP can emit the same
 schema for corpus views and slices, so both tools can exchange context without
 inventing separate pack formats.
 
@@ -59,18 +59,18 @@ inventing separate pack formats.
   "title": "Guide",
   "source": "guide.source.md",
   "format": "markdown",
-  "metadata": {"tags": "[mdloom, guide]", "status": "ready"},
+  "metadata": {"tags": "[proof, guide]", "status": "ready"},
   "sections": [
     {
       "id": "guide",
       "path": ["Guide"],
       "level": 1,
       "line": 1,
-      "metadata": {"tags": "[mdloom, guide]", "status": "ready"},
+      "metadata": {"tags": "[proof, guide]", "status": "ready"},
       "text": "# Guide\n\nResolved Markdown text."
     }
   ],
-  "refs": [".mdloom/side-info/links.json"]
+  "refs": [".proof/side-info/links.json"]
 }
 ```
 
@@ -81,7 +81,7 @@ let mdport = mdport::MdportDocument::from_markdown(
     "# Guide\n\nBody",
     "fallback title",
     "guide.source.md",
-    [".mdloom/side-info/links.json"],
+    [".proof/side-info/links.json"],
 );
 let json = mdport.to_json()?;
 ```

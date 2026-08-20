@@ -3,7 +3,7 @@
 ## Research question
 
 How should `mdport.v1` improve transfer size, MDCROP runtime, and context quality
-before broader adoption by repos beyond MDLOOM and MDCROP?
+before broader adoption by repos beyond PROOF and MDCROP?
 
 Decision supported: keep `mdport.v1` stable as compact JSON for first adoption,
 then prototype bundle and section-link improvements behind explicit compatibility
@@ -122,7 +122,7 @@ cost.**
 
 ### Defer or reject for now
 
-1. Do not replace `mdport.v1` with binary-only encoding before MDLOOM/MDCROP/MAXIM
+1. Do not replace `mdport.v1` with binary-only encoding before PROOF/MDCROP/MAXIM
    adoption. It would make debugging and third-party adoption harder.
 2. Do not alias field names in `mdport.v1`; short keys reduce bytes but weaken
    the public contract. Test bundle/key-table approaches first.

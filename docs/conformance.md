@@ -32,7 +32,7 @@ is smaller than the retained review-formatted fixture.
   parser rejects unknown schemas before admission, and required-field failures
   retain their source location.
 - **Integration Reviewer:** accepted. The fixtures describe MDPORT-owned records
-  without MDLOOM- or MDCROP-private fields; producer and consumer policy stays
+  without PROOF- or MDCROP-private fields; producer and consumer policy stays
   outside the transfer schema.
 - **Compactness Reviewer:** accepted. The slice adds no wire fields and measures
   compact serialization against the representative accepted record.

@@ -15,7 +15,7 @@ validate.
 
 ## Key Question
 
-*"Can MDLOOM, MDCROP, and a third-party reader exchange this without hidden
+*"Can PROOF, MDCROP, and a third-party reader exchange this without hidden
 assumptions?"*
 
 ## Lens - What to Verify
