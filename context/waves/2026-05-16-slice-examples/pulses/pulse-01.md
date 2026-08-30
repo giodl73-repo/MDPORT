@@ -20,3 +20,10 @@ runtime dependency or adding selector semantics to the Mdport schema.
 ## Status
 
 Done.
+
+## Supersession
+
+This pulse records a completed historical experiment. The later MDPORT rename
+removed the dev-only SLICE integration and the `docs/specs/slice-selectors.md`
+surface so the crate remains an independent transfer schema. Do not treat this
+pulse as a current validation command list.
