@@ -107,6 +107,11 @@ migration, deprecation, and rollback rules.
 
 - [Performance research](docs/research/performance.md) tracks size, speed, and
   quality options before broader adoption.
+- [Performance-claim boundary](docs/research/performance-claim-boundary.md)
+  keeps retained fixture evidence, synthetic MDCROP benchmark evidence, and
+  real-corpus adoption claims separate. `MDP-PF-05` blocks faster, smaller,
+  higher-quality, broad-adoption, or hot-path replacement claims until
+  real-corpus benchmark evidence is named.
 
 ## License
 

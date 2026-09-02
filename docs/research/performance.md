@@ -98,6 +98,16 @@ cost.**
 
 ## Recommendations
 
+### Claim boundary
+
+Synthetic MDCROP fixtures and retained conformance fixtures are regression
+evidence, not broad adoption evidence. Before MDPORT claims faster, smaller,
+higher-quality, or replacement-ready behavior for portfolio hot paths, cite the
+claim gate in [`performance-claim-boundary.md`](performance-claim-boundary.md):
+corpus identity and size, fixture or generation command, benchmark command, run
+count, environment boundary, Markdown and Mdport bytes, timing, selected-context
+quality, and downstream owner acceptance.
+
 ### Adopt now
 
 1. Keep canonical `mdport.v1` as compact UTF-8 JSON without BOM.
@@ -136,6 +146,9 @@ cost.**
 2. Maintain the synthetic MDCROP fixture quality target: Mdport should beat
    Markdown by at least `+0.10` quality at medium and large sizes and run in no
    more than 70% of the Markdown total time.
-3. Add a real MAXIM slice fixture once the MAXIM backfill path emits Mdports.
-4. Prototype bundle output in the Mdport crate without changing
+3. Keep the retained MAXIM-shaped admission fixture green:
+   `cargo test --test conformance retained_real_corpus_slice_has_admission_evidence_without_performance_claim`.
+4. Add full real MAXIM corpus benchmark output once the MAXIM backfill path emits
+   Mdports.
+5. Prototype bundle output in the Mdport crate without changing
    `MdportDocument::to_json()`.

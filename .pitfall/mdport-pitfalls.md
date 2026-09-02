@@ -85,7 +85,7 @@ closeout.
 
 ## MDP-PF-05: Performance Claims Outrun Real-Corpus Evidence
 
-**Status:** OPEN
+**Status:** MITIGATED
 
 **Pattern:** MDPORT is promoted as faster, smaller, or higher-quality for broad
 portfolio adoption based only on synthetic MDCROP fixtures or medium-confidence
@@ -98,9 +98,14 @@ backfill plans, bundle experiments, and public adoption claims.
 improvements while current JSON bytes are larger than Markdown and real
 MAXIM-scale corpora have not been measured.
 
-**Structural solution:** Add repeatable real-corpus fixtures and benchmark
-commands before making broad performance claims or replacing downstream hot
-paths.
+**Structural solution:** Add repeatable real-corpus admission fixtures and
+benchmark-command gates before making broad performance claims or replacing
+downstream hot paths. MDPORT now has a retained MAXIM-shaped corpus fixture and
+conformance test for schema admission, plus a claim boundary that requires named
+corpus size, fixture/generation command, benchmark command, run count,
+environment, bytes, timing, quality, and downstream owner acceptance before
+faster/smaller/higher-quality/replacement-ready claims.
 
 **Evidence:** `docs/research/performance.md`, especially `MDPORT-03` and
-`Next validation`.
+`Next validation`, `docs/research/performance-claim-boundary.md`,
+`tests/fixtures/maxim-real-corpus-slice.md`, and `tests/conformance.rs`.

@@ -76,3 +76,23 @@ first-party integrations do not become hidden wire-format requirements.
 
 **Evidence:** `Cargo.toml`, `context/waves/2026-07-26-mdport-rename/WAVE.md`,
 and `context/waves/2026-07-26-mdport-rename/CLOSE.md`.
+
+## MDP-I-06: Performance Claims Require Real-Corpus Evidence
+
+**Status:** VERIFIED
+
+**Invariant:** MDPORT may claim retained schema admission or bounded synthetic
+benchmark results, but broad faster/smaller/higher-quality/replacement-ready
+claims require named corpus size, fixture or generation command, benchmark
+command, run count, environment boundary, Markdown and Mdport bytes, timing,
+quality, and downstream owner acceptance.
+
+**Why it matters:** Synthetic fixtures can prove useful regressions while still
+overstating portfolio readiness if real MAXIM-scale corpora and consumer hot
+paths have not been measured.
+
+**Test:** `cargo test --test conformance`.
+
+**Evidence:** `docs/research/performance-claim-boundary.md`,
+`tests/fixtures/maxim-real-corpus-slice.md`, `tests/conformance.rs`, and
+`docs/research/performance.md`.

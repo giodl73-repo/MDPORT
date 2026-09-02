@@ -3,6 +3,7 @@ use mdport::{MdportDocument, MdportReadError, SCHEMA};
 const ACCEPTED_DOCUMENT: &str = include_str!("fixtures/accepted-document.json");
 const UNSUPPORTED_SCHEMA: &str = include_str!("fixtures/unsupported-schema.json");
 const INVALID_RECORD: &str = include_str!("fixtures/invalid-record.json");
+const MAXIM_REAL_CORPUS_SLICE: &str = include_str!("fixtures/maxim-real-corpus-slice.md");
 
 #[test]
 fn retained_document_round_trips_through_canonical_json() {
@@ -55,4 +56,40 @@ fn invalid_record_has_location_and_message() {
         }
         other => panic!("expected invalid-record failure, got {other:?}"),
     }
+}
+
+#[test]
+fn retained_real_corpus_slice_has_admission_evidence_without_performance_claim() {
+    let mdport = MdportDocument::from_markdown(
+        MAXIM_REAL_CORPUS_SLICE,
+        "MAXIM real-corpus slice",
+        "tests/fixtures/maxim-real-corpus-slice.md",
+        ["docs/research/performance-claim-boundary.md"],
+    );
+
+    assert_eq!(mdport.schema, SCHEMA);
+    assert_eq!(mdport.source, "tests/fixtures/maxim-real-corpus-slice.md");
+    assert_eq!(
+        mdport.refs,
+        vec!["docs/research/performance-claim-boundary.md"]
+    );
+    assert!(mdport.sections.iter().any(|section| {
+        section.path == vec!["Distributed Systems Context Slice", "Consistency Boundary"]
+            && section.text.contains("Linearizability")
+    }));
+    assert!(mdport.sections.iter().any(|section| {
+        section.path == vec!["Distributed Systems Context Slice", "Operational Caveats"]
+            && section
+                .text
+                .contains("Public performance claims need corpus name")
+    }));
+
+    let canonical = mdport
+        .to_json()
+        .expect("real-corpus slice should serialize");
+    let reparsed = MdportDocument::from_json_checked(&canonical)
+        .expect("real-corpus slice should read through checked admission");
+
+    assert_eq!(reparsed, mdport);
+    assert!(canonical.len() > MAXIM_REAL_CORPUS_SLICE.len());
 }
