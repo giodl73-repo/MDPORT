@@ -61,6 +61,8 @@ test('original file download preserves CRLF and extensions until edited',async (
   await ready(page);const input=JSON.parse(sample);input.extension={origin:'Café 🌿'};const text=JSON.stringify(input,null,2).replace(/\n/g,'\r\n');
   await page.locator('#file').setInputFiles({name:'original.json',mimeType:'application/json',buffer:Buffer.from(text)});
   expect(await download(page,'#original-download')).toBe(text);await page.locator('#run').click();await expect(page.locator('#unknown-warning')).toBeVisible();await expect(page.locator('#download')).toBeDisabled();
+  await page.locator('#file').setInputFiles({name:'unreadable.json',mimeType:'application/json',buffer:Buffer.from([255])});
+  await expect(page.locator('#error-message')).toContainText('valid UTF-8');expect(await download(page,'#original-download')).toBe(text);
   const edited=JSON.stringify({...input,title:'Edited'});await page.locator('#record').fill(edited);expect(await download(page,'#original-download')).toBe(edited);
 });
 test('oversized and invalid UTF-8 files preserve the previous draft',async ({page})=>{
