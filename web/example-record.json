@@ -1,0 +1,42 @@
+{
+  "schema": "mdport.v1",
+  "kind": "document",
+  "title": "Field Guide",
+  "source": "guide.source.md",
+  "format": "markdown",
+  "metadata": {
+    "status": "example",
+    "source_custody": "synthetic public fixture"
+  },
+  "sections": [
+    {
+      "id": "field-guide",
+      "path": [
+        "Field Guide"
+      ],
+      "level": 1,
+      "line": 1,
+      "metadata": {
+        "status": "example"
+      },
+      "text": "# Field Guide\n\nA small public example for inspecting portable context."
+    },
+    {
+      "id": "notes",
+      "path": [
+        "Field Guide",
+        "Notes"
+      ],
+      "level": 2,
+      "line": 5,
+      "metadata": {
+        "topic": "provenance"
+      },
+      "text": "## Notes\n\nSource identity and references are carried as supplied. They are not verified by this inspector."
+    }
+  ],
+  "refs": [
+    "md://guide.source.md#field-guide",
+    "md://guide.source.md#notes"
+  ]
+}

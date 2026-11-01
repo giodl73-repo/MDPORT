@@ -27,4 +27,8 @@ venv/
 *.toc
 .cargo/config.toml
 
-Cargo.lock
+/dist/
+/.cache/
+/node_modules/
+/test-results/
+/playwright-report/

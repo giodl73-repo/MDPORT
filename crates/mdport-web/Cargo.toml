@@ -1,0 +1,22 @@
+[package]
+name = "mdport-web"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+description = "Bounded record inspector over the unchanged MDPORT checked parser"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "mdport-inspect"
+path = "src/main.rs"
+
+[features]
+wasm = ["dep:wasm-bindgen"]
+
+[dependencies]
+mdport = { path = "../.." }
+serde_json = "1"
+wasm-bindgen = { version = "=0.2.127", optional = true }

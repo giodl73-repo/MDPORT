@@ -9,6 +9,24 @@ agents. The current schema is `mdport.v1`.
 [ROLES](https://github.com/giodl73-repo/ROLES), the `.roles` convention for
 repository-local review panels.
 
+## Try the record inspector
+
+[Open the Rust/WASM record inspector](https://giodl73-repo.github.io/MDPORT/).
+Paste a `mdport.v1` record or open a local UTF-8 JSON file, inspect ordered
+sections and provenance fields, and download native compact JSON. The public
+example runs immediately. Input remains in the tab; references and Markdown are
+inert text. Acceptance verifies the existing structural/schema contract within
+inspector limits, not source existence or provenance trust. Unknown extension
+fields are flagged and disable compact export to prevent silent data loss;
+original input remains downloadable.
+
+The same checked Rust parser runs natively and in a worker. The adapter has a
+1 MiB input limit and bounded nesting/counts; those are inspector policy, not
+new schema constraints. Retry retains your draft. Source ZIP, compiled WASM,
+build provenance and scoped dependency notices are linked independently of the
+engine. See [build and validation](BUILD.md) and the
+[implementation wave](context/waves/2026-10-31-wasm-inspector/WAVE.md).
+
 ## MD family
 
 MDPORT is the transfer layer in the MD family:
@@ -111,3 +129,8 @@ migration, deprecation, and rollback rules.
 ## License
 
 [MIT](LICENSE) — © 2026 Gio Della-Libera.
+
+This grant covers first-party software and documentation. Retained Rust notices
+in `tools/licenses/rust/` and generated dependency notices preserve their upstream
+licenses; they are not relicensed by the first-party MIT grant. User-supplied
+records keep their own ownership and permissions.
