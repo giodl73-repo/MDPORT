@@ -26,8 +26,8 @@ function engineError(message, detail = '') {
   $('status').textContent = 'Engine unavailable. Your draft is retained; source and original input downloads still work.';
   $('retry').hidden = false; controls();
 }
-function invalidate() {
-  originalFileText = null;
+function invalidate({ preserveOriginal = false } = {}) {
+  if (!preserveOriginal) originalFileText = null;
   revision++; clearResults(); $('error').hidden = true;
   if (ready) $('status').textContent = busy ? 'Draft changed. Waiting for the previous inspection.' : 'Draft changed. Inspect again to refresh results.';
   // Startup and compute deadlines survive edits.
@@ -108,7 +108,7 @@ $('download').addEventListener('click',() => { if (result?.canonical) download('
 $('original-download').addEventListener('click',() => download('original-input.json',originalFileText ?? $('record').value));
 $('file').addEventListener('change',async () => {
   const file = $('file').files[0]; if (!file) return;
-  invalidate(); const token = ++fileSerial, atRevision = revision; reading = false;
+  invalidate({ preserveOriginal: true }); const token = ++fileSerial, atRevision = revision; reading = false;
   if (file.size > 1048576) { diagnostic({kind:'file',message:'Choose a JSON file no larger than 1 MiB.'}); $('file').value = ''; return; }
   reading = true; controls();
   try {
