@@ -54,6 +54,8 @@ test('local Unicode file input is inert and references are never fetched',async 
   await page.locator('#file').setInputFiles({name:'own.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(input))});await page.locator('#run').click();
   await expect(page.locator('#title')).toHaveText('Café 🌿');await expect(page.locator('#section-text')).toContainText('<img');await expect(page.locator('#results img')).toHaveCount(0);await expect(page.locator('#refs a')).toHaveCount(0);
   expect(JSON.parse(await download(page,'#download'))).toEqual(input);expect(external).toEqual([]);
+  await page.setViewportSize({width:390,height:844});input.title='x'.repeat(4000);input.source='s'.repeat(2000);await submit(page,JSON.stringify(input));
+  await expect(page.locator('#title')).toHaveText(input.title);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });
 test('original file download preserves CRLF and extensions until edited',async ({page})=>{
   await ready(page);const input=JSON.parse(sample);input.extension={origin:'Café 🌿'};const text=JSON.stringify(input,null,2).replace(/\n/g,'\r\n');
