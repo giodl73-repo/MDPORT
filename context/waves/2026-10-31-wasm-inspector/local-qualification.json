@@ -1,0 +1,175 @@
+{
+  "stage": "precommit dirty preview; not deployed release pins",
+  "native_tests": 14,
+  "canonical_native_wasm_cases": 15,
+  "browser": {
+    "stats": {
+      "startTime": "2026-11-01T03:59:15.651Z",
+      "duration": 17889.21,
+      "expected": 29,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "retries": 0
+  },
+  "preview_site": {
+    "commit": "9c53bf5c64fbaf2fcf13fc53904cc1bd53c8432d",
+    "dirty": true,
+    "bytes": 1107691,
+    "files": {
+      ".nojekyll": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "app.js": {
+        "bytes": 8425,
+        "sha256": "9fc6c90cb7843afacd988ed3e5e4b1fe2500dd1177399df9026e82a5131703ee"
+      },
+      "BUILD.md": {
+        "bytes": 2259,
+        "sha256": "9a647ab9d1a7c51b5c764220ef51944051b764a1dfc2bb65de17394a002d72f5"
+      },
+      "example-record.json": {
+        "bytes": 963,
+        "sha256": "c0fb00bd0aa686f44db801f22e32575ce8b95ec99b81201f3465d86ebd4ff504"
+      },
+      "index.html": {
+        "bytes": 6802,
+        "sha256": "48c4442641bb3f4eae390ffb7f773d572c2fd8aa3e76ab22bb41a076c120b7cf"
+      },
+      "LICENSE": {
+        "bytes": 1094,
+        "sha256": "a33382ab2e3ff573aff888bbb45756043e077d4c75d38cf6a7ecf4cd05906109"
+      },
+      "pkg/mdport_web.d.ts": {
+        "bytes": 1509,
+        "sha256": "6ea772bb36257985e74004741e01f75ae771f97ebf02cf8b4b517165941c47a8"
+      },
+      "pkg/mdport_web.js": {
+        "bytes": 6697,
+        "sha256": "f8b9cc16253c2507be3f67357db415dcfb596207f1b173ea47f3a3f1f4ae52f8"
+      },
+      "pkg/mdport_web_bg.wasm": {
+        "bytes": 205474,
+        "sha256": "2801e50a78279cdd77943c5e36f97302cb07ef037b796b2ea98a7d1736acf591"
+      },
+      "pkg/mdport_web_bg.wasm.d.ts": {
+        "bytes": 475,
+        "sha256": "c8bcb609ac86d1c7b5045641582515bc8c4eacb7248c42f82e5cfae4a8237549"
+      },
+      "provenance.json": {
+        "bytes": 2555,
+        "sha256": "96dd76b8838c9542a67ff2e180077bf928524f82ff734915c7eaf61e6eeff920"
+      },
+      "rust/COPYRIGHT-library.html": {
+        "bytes": 425661,
+        "sha256": "90567e2718bf7fd65a71a3a43c5596488e80e5f51ed02bfea6fec54458b5f3d1"
+      },
+      "rust/licenses/Apache-2.0.txt": {
+        "bytes": 10280,
+        "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff"
+      },
+      "rust/licenses/BSD-2-Clause.txt": {
+        "bytes": 1267,
+        "sha256": "f32fb3b417a194167cfad068223fc975ba96c5960513a10f66a3c28720aec1df"
+      },
+      "rust/licenses/CC-BY-SA-4.0.txt": {
+        "bytes": 20137,
+        "sha256": "23ee78c8bae49cf08ea2f0c84945c66b987ebe4520881fb51b3dad4fb43d07c2"
+      },
+      "rust/licenses/GCC-exception-3.1.txt": {
+        "bytes": 3320,
+        "sha256": "a3966c9410ef94a1efbfa9ec04e9c1994026a70623fbf0885ce36737bfba3b54"
+      },
+      "rust/licenses/GPL-2.0-only.txt": {
+        "bytes": 17642,
+        "sha256": "54b212ba1f97f6948fa5486239ab505dd820b02e50cbfd296b4062c8609a70af"
+      },
+      "rust/licenses/GPL-3.0-or-later.txt": {
+        "bytes": 34795,
+        "sha256": "05315fce6c35f79b8a35454828995fa26336f235895ac64557abc028f4ffcea2"
+      },
+      "rust/licenses/ISC.txt": {
+        "bytes": 730,
+        "sha256": "0ff61769b238634e042ab759dddfd104a8e69d091e3600ae3410e401a6164381"
+      },
+      "rust/licenses/LLVM-exception.txt": {
+        "bytes": 919,
+        "sha256": "e34c58338bd89d43e709e226610d8f32b3e3c47f4ad9a99a8dc1d4ac7842488e"
+      },
+      "rust/licenses/MIT.txt": {
+        "bytes": 1078,
+        "sha256": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0"
+      },
+      "rust/licenses/NCSA.txt": {
+        "bytes": 1676,
+        "sha256": "39cb0234065c92b9e6cee3830cbb52b1aa289aa8fe9ba2e66730fec5cf05c630"
+      },
+      "rust/licenses/OFL-1.1.txt": {
+        "bytes": 4016,
+        "sha256": "8eea8287e5876b539670cadb82e99f9a7afddec6f6730811be1daf25d2e9bcfd"
+      },
+      "rust/licenses/Unicode-3.0.txt": {
+        "bytes": 1995,
+        "sha256": "f5062c9a188d81dfe66b56db4182dcf9e4b17c0d9b0d311a8e20b3a1b075c443"
+      },
+      "rust/README.md": {
+        "bytes": 743,
+        "sha256": "0804c5f4671e453d6b66cd67f8882a4956c6c57b88ba7557361ebe210062544a"
+      },
+      "source/Cargo.lock": {
+        "bytes": 4926,
+        "sha256": "72455ec486056e8eb4eb1c6c9e62b3e94a8d0e29c95822969ab48a6242d86700"
+      },
+      "source/crates/mdport-web/src/lib.rs": {
+        "bytes": 9662,
+        "sha256": "ebea413fd9f09ba32f3aeb2fe82bfc4853e77a2ed8b9190fd759c5d4422891ea"
+      },
+      "source/src/lib.rs": {
+        "bytes": 14034,
+        "sha256": "48f5404a20dcc94d574dcc06b681f66ea8ba24a39da00822d317943d6fc8699e"
+      },
+      "source.zip": {
+        "bytes": 102133,
+        "sha256": "140ddf48272b1558079b2f283d3a26e38ac488031af58e42a7d61efa66a83bc7"
+      },
+      "style.css": {
+        "bytes": 4127,
+        "sha256": "c2c559c7145598e9d7ab66032178ff3c63cb7cf73bf7d815a6554a611c143932"
+      },
+      "THIRD-PARTY-NOTICES.txt": {
+        "bytes": 211778,
+        "sha256": "b9debbe800cdb613e1f000025b82d2ddca49c14739990545a8cba381b2ec04eb"
+      },
+      "worker.js": {
+        "bytes": 519,
+        "sha256": "7f7aa89178cabe4d5b19610fa891e8407a814a9f5feaa52894af0af798737a94"
+      }
+    }
+  },
+  "observations": {
+    "desktop": {
+      "browser": "149.0.7827.55",
+      "viewport": {
+        "width": 1365,
+        "height": 900
+      },
+      "readiness_ms": 117,
+      "fixture_sections": 2,
+      "scope": "One environment-specific startup including worker/network/UI; not Rust CPU or large-corpus benchmark"
+    },
+    "mobile": {
+      "browser": "149.0.7827.55",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "readiness_ms": 109,
+      "fixture_sections": 2,
+      "scope": "One environment-specific startup including worker/network/UI; not Rust CPU or large-corpus benchmark"
+    }
+  },
+  "producer_review": "docs/reviews/wasm-inspector-role-review.md",
+  "boundary": "No CPU, large-corpus, trust, quality or adoption claim."
+}
